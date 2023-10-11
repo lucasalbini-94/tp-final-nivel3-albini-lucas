@@ -67,20 +67,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Articulos.aspx" />
+    <Content Include="Articulo.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="AdminArticulos.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Articulos.aspx.cs">
-      <DependentUpon>Articulos.aspx</DependentUpon>
+    <Compile Include="Articulo.aspx.cs">
+      <DependentUpon>Articulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Articulos.aspx.designer.cs">
-      <DependentUpon>Articulos.aspx</DependentUpon>
+    <Compile Include="Articulo.aspx.designer.cs">
+      <DependentUpon>Articulo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="AdminArticulos.aspx.cs">
+      <DependentUpon>AdminArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminArticulos.aspx.designer.cs">
+      <DependentUpon>AdminArticulos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master.Master.cs">
       <DependentUpon>Master.Master</DependentUpon>
@@ -137,6 +145,10 @@
     <ProjectReference Include="..\Negocio\Negocio.csproj">
       <Project>{3fe0ece7-1fe3-41a4-9752-9ac027531b86}</Project>
       <Name>Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Servicios\Servicios.csproj">
+      <Project>{b04a15e0-dc93-435d-b3ed-a644560b2f56}</Project>
+      <Name>Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

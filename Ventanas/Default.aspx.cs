@@ -15,11 +15,26 @@ namespace Ventanas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            ListaArticulos = negocio.listarArticulos();
+            ArticuloNegocio articulo = new ArticuloNegocio();
+            ListaArticulos = articulo.listarArticulos();
+
+            if (Session["listaArticulos"] is null)
+            {
+                Session.Add("listaArticulos", ListaArticulos);
+            }
 
             repRepetidor.DataSource = ListaArticulos;
             repRepetidor.DataBind();
+            if (!IsPostBack)
+            {
+                MarcaNegocio marca = new MarcaNegocio();
+                CategoriaNegocio categoria = new CategoriaNegocio();
+
+                ddlMarca.DataSource = marca.listarMarcas();
+                ddlMarca.DataBind();
+                ddlCategoria.DataSource = categoria.listarCategorias();
+                ddlCategoria.DataBind();
+            }
         }
     }
 }
