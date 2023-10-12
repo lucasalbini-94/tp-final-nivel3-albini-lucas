@@ -31,10 +31,19 @@ namespace Ventanas
                 CategoriaNegocio categoria = new CategoriaNegocio();
 
                 ddlMarca.DataSource = marca.listarMarcas();
+                ddlMarca.DataTextField = "Descripcion";
+                ddlMarca.DataValueField = "Id";
                 ddlMarca.DataBind();
                 ddlCategoria.DataSource = categoria.listarCategorias();
+                ddlCategoria.DataValueField = "Id";
+                ddlCategoria.DataTextField = "Descripcion";
                 ddlCategoria.DataBind();
             }
+        }
+
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

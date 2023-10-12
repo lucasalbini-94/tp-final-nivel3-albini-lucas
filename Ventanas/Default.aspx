@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" EnableEventValidation="true"%>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -14,7 +15,7 @@
         <div class="col-6">
             <div class="d-flex mt-3" role="search">
                 <input class="form-control me-2" type="search" placeholder="Buscar artículos" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                <button class="btn btn-outline-success" type="submit" id="btnBuscar">Buscar</button>
             </div>
         </div>
         <div class="col-1"></div>
@@ -54,6 +55,13 @@
                                 <h5 class="card-title"><%#Eval("Nombre") %></h5>
                                 <p class="card-text"><%#Eval("Descripcion") %></p>
                                 <h4 class="card-subtitle"><%#Eval("Precio") %></h4>
+                                <div class="mt-3">
+                                    <asp:Button Text="Ver" ID="btnVer" CssClass="btn btn-secondary" CommandArgument='<%#Eval("Id") %>' PostBackUrl='<%# "DescripcionArticulo.aspx?id=" + Eval("Id") %>' runat="server" />
+                                    <% if (Session["sesionActiva"] != null)
+                                        { %>
+                                    <asp:Button runat="server" Text="Agregar al carrito" ID="btnAgregarCarrito" CommandArgument='<%#Eval("Id") %>' onClick="btnAgregarCarrito_Click" CssClass="btn btn-success"/>
+                                    <% } %>
+                                </div>
                             </div>
                         </div>
                     </div>

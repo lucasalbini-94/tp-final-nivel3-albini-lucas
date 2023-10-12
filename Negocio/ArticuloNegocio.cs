@@ -68,7 +68,8 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                ex.ToString();
+                Console.WriteLine(ex.ToString());
+                throw ex;
             }
             finally
             {

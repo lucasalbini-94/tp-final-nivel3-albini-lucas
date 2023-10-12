@@ -53,6 +53,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 throw ex;
             }
         }

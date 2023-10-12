@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Articulo.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DescripcionArticulo.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="AdminArticulos.aspx" />
@@ -89,6 +90,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DescripcionArticulo.aspx.cs">
+      <DependentUpon>DescripcionArticulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DescripcionArticulo.aspx.designer.cs">
+      <DependentUpon>DescripcionArticulo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Favoritos.aspx.cs">
       <DependentUpon>Favoritos.aspx</DependentUpon>
@@ -135,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\ImagesArt\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
