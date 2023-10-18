@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Ventanas
 {
-    public partial class Master : System.Web.UI.MasterPage
+    public partial class Error : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            imgAvatar.ImageUrl = "https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg";
+            lblErrorText.Text = Session["error"].ToString();
         }
     }
 }

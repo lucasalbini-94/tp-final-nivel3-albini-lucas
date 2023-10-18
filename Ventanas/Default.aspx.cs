@@ -15,29 +15,30 @@ namespace Ventanas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio articulo = new ArticuloNegocio();
-            ListaArticulos = articulo.listarArticulos();
-
-            if (Session["listaArticulos"] is null)
+            try
             {
-                Session.Add("listaArticulos", ListaArticulos);
+                ArticuloNegocio articulo = new ArticuloNegocio();
+                ListaArticulos = articulo.listarArticulos();
+
+                if (!IsPostBack)
+                {
+                    MarcaNegocio marca = new MarcaNegocio();
+                    CategoriaNegocio categoria = new CategoriaNegocio();
+
+                    ddlMarca.DataSource = marca.listarMarcas();
+                    ddlMarca.DataTextField = "Descripcion";
+                    ddlMarca.DataValueField = "Id";
+                    ddlMarca.DataBind();
+                    ddlCategoria.DataSource = categoria.listarCategorias();
+                    ddlCategoria.DataValueField = "Id";
+                    ddlCategoria.DataTextField = "Descripcion";
+                    ddlCategoria.DataBind();
+                }
             }
-
-            repRepetidor.DataSource = ListaArticulos;
-            repRepetidor.DataBind();
-            if (!IsPostBack)
+            catch (Exception ex)
             {
-                MarcaNegocio marca = new MarcaNegocio();
-                CategoriaNegocio categoria = new CategoriaNegocio();
-
-                ddlMarca.DataSource = marca.listarMarcas();
-                ddlMarca.DataTextField = "Descripcion";
-                ddlMarca.DataValueField = "Id";
-                ddlMarca.DataBind();
-                ddlCategoria.DataSource = categoria.listarCategorias();
-                ddlCategoria.DataValueField = "Id";
-                ddlCategoria.DataTextField = "Descripcion";
-                ddlCategoria.DataBind();
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
         }
 

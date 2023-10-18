@@ -14,42 +14,48 @@ namespace Ventanas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["listaArticulos"] is null)
+            try
             {
-                ArticuloNegocio articulo = new ArticuloNegocio();
-                Session.Add("listaArticulos", articulo.listarArticulos());
-            }
-            if (!IsPostBack)
-            {
-                MarcaNegocio marca = new MarcaNegocio();
-                CategoriaNegocio categoria = new CategoriaNegocio();
-                ddlMarca.DataSource = marca.listarMarcas();
-                ddlMarca.DataTextField = "Descripcion";
-                ddlMarca.DataValueField = "Id";
-                ddlMarca.DataBind();
-                ddlCategoria.DataSource = categoria.listarCategorias();
-                ddlCategoria.DataTextField = "Descripcion";
-                ddlCategoria.DataValueField = "Id";
-                ddlCategoria.DataBind();
-            }
-            if (Request.QueryString["id"] != null)
-            {
-                int id = int.Parse(Request.QueryString["id"].ToString());
-                List<Articulo> lista = (List<Articulo>)Session["listaArticulos"];
-                Articulo seleccionado = lista.Find(x => x.Id == id);
+                ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                if (!IsPostBack)
+                {
+                    MarcaNegocio marcaNegocio = new MarcaNegocio();
+                    CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                    ddlMarca.DataSource = marcaNegocio.listarMarcas();
+                    ddlMarca.DataTextField = "Descripcion";
+                    ddlMarca.DataValueField = "Id";
+                    ddlMarca.DataBind();
+                    ddlCategoria.DataSource = categoriaNegocio.listarCategorias();
+                    ddlCategoria.DataTextField = "Descripcion";
+                    ddlCategoria.DataValueField = "Id";
+                    ddlCategoria.DataBind();
+                }
+                if (Request.QueryString["id"] != null && !IsPostBack)
+                {
+                    btnAgregar.Enabled = false;
+                    int id = int.Parse(Request.QueryString["id"].ToString());
+                    List<Articulo> lista = articuloNegocio.listarArticulos();
+                    Articulo seleccionado = lista.Find(x => x.Id == id);
 
-                tbxCodigo.Text = seleccionado.Codigo;
-                tbxNombre.Text = seleccionado.Nombre;
-                tbxDescripcion.Text = seleccionado.Descripcion;
-                ddlMarca.SelectedValue = seleccionado.Marca.Descripcion;
-                ddlCategoria.SelectedValue = seleccionado.Categoria.Descripcion;
-                tbxPrecio.Text = seleccionado.Precio.ToString("C2");
-                if (Helper.validarUrl(seleccionado.ImagenUrl))
-                    imgArticulo.ImageUrl = seleccionado.ImagenUrl;
+                    tbxCodigo.Text = seleccionado.Codigo;
+                    tbxNombre.Text = seleccionado.Nombre;
+                    tbxDescripcion.Text = seleccionado.Descripcion;
+                    ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
+                    ddlCategoria.SelectedValue = seleccionado.Categoria.Id.ToString();
+                    tbxPrecio.Text = seleccionado.Precio.ToString("0.00");
+                    imgArticulo.ImageUrl = Helper.validarImagen(seleccionado.ImagenUrl);
+                }
                 else
                 {
-                    imgArticulo.ImageUrl = "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
+                    btnModificar.Enabled = false;
+                    lbtEliminar.Enabled = false;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
         }
 
@@ -59,33 +65,74 @@ namespace Ventanas
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 Articulo nuevo = new Articulo();
-                nuevo.Codigo = tbxCodigo.Text;
-                nuevo.Nombre = tbxNombre.Text;
-                nuevo.Descripcion = tbxDescripcion.Text;
-                nuevo.Marca = new Marca();
-                nuevo.Marca.Id = int.Parse(ddlMarca.SelectedValue);
-                nuevo.Categoria = new Categoria();
-                nuevo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
-                nuevo.Precio = decimal.Parse(tbxPrecio.Text);
-
-                if (!string.IsNullOrEmpty(tbxImagen.Value))
-                {
-                    string ruta = Server.MapPath("./Images/ImagesArt/");
-                    tbxImagen.PostedFile.SaveAs(ruta + "art-" + nuevo.Codigo + "-" + DateTime.Now.ToString("dd-MM-yyyy") + "-img.jpg");
-                    nuevo.ImagenUrl = "art-" + nuevo.Codigo + "-" + DateTime.Now.ToString("dd-MM-yyyy") + "-img.jpg";
-                }
-                else
-                {
-                    nuevo.ImagenUrl = "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
-                }
-
+                cargarDatos(nuevo);
                 negocio.agregar(nuevo);
+                Response.Redirect("AdminArticulos.aspx", false);
             }
             catch (Exception ex)
             {
-                throw ex;
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
 
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                Articulo seleccionado = new Articulo();
+                cargarDatos(seleccionado);
+                seleccionado.Id = int.Parse(Request.QueryString["id"]);
+                negocio.modificar(seleccionado);
+                Response.Redirect("AdminArticulos.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
+        }
+
+        protected void lbtEliminar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            negocio.eliminar(int.Parse(Request.QueryString["id"]));
+            Response.Redirect("AdminArticulos.aspx", false);
+        }
+
+        public void cargarDatos(Articulo articulo)
+        {
+            try
+            {
+                string ruta;
+                articulo.Codigo = tbxCodigo.Text;
+                articulo.Nombre = tbxNombre.Text;
+                articulo.Descripcion = tbxDescripcion.Text;
+                articulo.Marca = new Marca();
+                articulo.Marca.Id = int.Parse(ddlMarca.SelectedValue);
+                articulo.Categoria = new Categoria();
+                articulo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
+                articulo.Precio = decimal.Parse(tbxPrecio.Text);
+
+                if (!string.IsNullOrEmpty(tbxImagen.Value))
+                {
+                    ruta = Server.MapPath("./Images/ImagesArt/");
+                    tbxImagen.PostedFile.SaveAs(ruta + "art-" + articulo.Codigo + "-" + DateTime.Now.ToString("dd-MM-yyyy") + "-img.jpg");
+                    articulo.ImagenUrl = "art-" + articulo.Codigo + "-" + DateTime.Now.ToString("dd-MM-yyyy") + "-img.jpg";
+                }
+                else if (!string.IsNullOrEmpty(tbxImagenUrl.Text))
+                    articulo.ImagenUrl = tbxImagenUrl.Text;
+                else
+                    articulo.ImagenUrl = "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx");
+            }
         }
     }
 }

@@ -46,27 +46,33 @@
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10 row row-cols-1 row-cols-md-3 g-4">
-            <asp:Repeater runat="server" ID="repRepetidor">
-                <ItemTemplate>
-                    <div class="col">
-                        <div class="card">
-                            <img src="<%#Eval("ImagenUrl") %>" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title"><%#Eval("Nombre") %></h5>
-                                <p class="card-text"><%#Eval("Descripcion") %></p>
-                                <h4 class="card-subtitle"><%#Eval("Precio") %></h4>
-                                <div class="mt-3">
-                                    <asp:Button Text="Ver" ID="btnVer" CssClass="btn btn-secondary" CommandArgument='<%#Eval("Id") %>' PostBackUrl='<%# "DescripcionArticulo.aspx?id=" + Eval("Id") %>' runat="server" />
-                                    <% if (Session["sesionActiva"] != null)
-                                        { %>
-                                    <asp:Button runat="server" Text="Agregar al carrito" ID="btnAgregarCarrito" CommandArgument='<%#Eval("Id") %>' onClick="btnAgregarCarrito_Click" CssClass="btn btn-success"/>
-                                    <% } %>
-                                </div>
-                            </div>
+            <% foreach (Dominio.Articulo articulo in ListaArticulos)
+                { %>
+            <div class="col">
+                <div class="card">
+
+                 <% if (articulo.ImagenUrl.ToLower().Contains("http"))
+                    { %>
+                        <%--Cargo imagen desde la web--%>
+                        <img src="<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde la web">
+                 <% }
+                    else
+                    { %>
+                        <%--Cargo imagen desde la carpeta local--%>
+                        <img src="~/Images/ImagesArt/<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde carpeta">
+                 <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%: articulo.Nombre %></h5>
+                        <p class="card-text"><%: articulo.Descripcion %></p>
+                        <h4 class="card-subtitle"><%: articulo.Precio.ToString("0.00") %></h4>
+                        <div class="mt-3">
+                            <a href="DescripcionArticulo.aspx?id=<%: articulo.Id %>" class="btn btn-secondary">Ver</a>
                         </div>
                     </div>
-                </ItemTemplate>
-            </asp:Repeater>
+                        
+                </div>
+            </div>
+            <% } %>
         </div>
         <div class="col-1"></div>
     </div>

@@ -78,6 +78,15 @@ namespace Ventanas
         protected global::System.Web.UI.HtmlControls.HtmlInputFile tbxImagen;
 
         /// <summary>
+        /// Control tbxImagenUrl.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbxImagenUrl;
+
+        /// <summary>
         /// Control imgArticulo.
         /// </summary>
         /// <remarks>
@@ -105,12 +114,12 @@ namespace Ventanas
         protected global::System.Web.UI.WebControls.Button btnModificar;
 
         /// <summary>
-        /// Control btnEliminar.
+        /// Control lbtEliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
+        protected global::System.Web.UI.WebControls.LinkButton lbtEliminar;
     }
 }

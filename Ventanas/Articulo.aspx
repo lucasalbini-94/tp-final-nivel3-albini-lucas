@@ -33,8 +33,12 @@
         </div>
         <div class="col-md-3">
             <div class="mb-3">
-                <label for="formFile" class="form-label">Default file input example</label>
+                <label for="formFile" class="form-label">Agregar imagen local</label>
                 <input class="form-control" type="file" id="tbxImagen" runat="server">
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Agregar imagen por URL</label>
+                <asp:TextBox runat="server" ID="tbxImagenUrl" CssClass="form-control" />
             </div>
             <div class="mb-3">
                 <asp:Image runat="server" ID="imgArticulo" CssClass="img-fluid mb-3" />
@@ -42,9 +46,9 @@
         </div>
         <div class="col-3">
             <div class="mb-3">
-                <asp:Button Text="Agregar" runat="server" Id="btnAgregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click"/>
-                <asp:Button Text="Modificar" runat="server" Id="btnModificar" CssClass="btn btn-secondary"/>
-                <asp:Button Text="Eliminar" runat="server" Id="btnEliminar" CssClass="btn btn-danger"/>
+                <asp:Button Text="Agregar" runat="server" ID="btnAgregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" />
+                <asp:Button Text="Modificar" runat="server" ID="btnModificar" CssClass="btn btn-secondary" OnClick="btnModificar_Click" />
+                <asp:LinkButton Text="Eliminar" runat="server" ID="lbtEliminar" OnClientClick="return confirm('¿Seguro que deseas eliminar este archivo?');" CssClass="btn btn-danger" OnClick="lbtEliminar_Click" />
             </div>
         </div>
     </div>

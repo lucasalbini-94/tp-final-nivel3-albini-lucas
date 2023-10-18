@@ -9,21 +9,31 @@ namespace Servicios
 {
     public static class Helper
     {
-        public static bool validarUrl(string url)
+        public static string validarImagen(string direccion)
         {
             try
             {
-                HttpWebRequest consulta = (HttpWebRequest)WebRequest.Create(url);
-                HttpWebResponse respuesta = (HttpWebResponse)consulta.GetResponse();
+                if (direccion.ToLower().Contains("http"))
+                {
+                    HttpWebRequest consulta = (HttpWebRequest)WebRequest.Create(direccion);
+                    HttpWebResponse respuesta = (HttpWebResponse)consulta.GetResponse();
 
-                if (respuesta.StatusCode == HttpStatusCode.OK)
-                    return true;
+                    if (respuesta.StatusCode == HttpStatusCode.OK)
+                        return direccion;
+                    else
+                        return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
+                }
+                else if (!string.IsNullOrEmpty(direccion))
+                {
+                    
+                    return "~/Images/ImagesArt/" + direccion;
+                }
                 else
-                    return false;
+                    return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
             }
             catch (Exception)
             {
-                return false;
+                return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
             }
         }
     }
