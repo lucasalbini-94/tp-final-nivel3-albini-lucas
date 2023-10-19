@@ -43,6 +43,8 @@ namespace Ventanas
                     ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
                     ddlCategoria.SelectedValue = seleccionado.Categoria.Id.ToString();
                     tbxPrecio.Text = seleccionado.Precio.ToString("0.00");
+                    if (seleccionado.ImagenUrl.ToLower().Contains("http"))
+                        tbxImagenUrl.Text = seleccionado.ImagenUrl;
                     imgArticulo.ImageUrl = Helper.validarImagen(seleccionado.ImagenUrl);
                 }
                 else

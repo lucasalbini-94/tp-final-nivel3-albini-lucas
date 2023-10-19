@@ -59,7 +59,7 @@
                     else
                     { %>
                         <%--Cargo imagen desde la carpeta local--%>
-                        <img src="~/Images/ImagesArt/<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde carpeta">
+                        <img src="/Images/ImagesArt/<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde carpeta">
                  <% } %>
                     <div class="card-body">
                         <h5 class="card-title"><%: articulo.Nombre %></h5>
