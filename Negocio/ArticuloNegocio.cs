@@ -124,5 +124,19 @@ namespace Negocio
                 datos.cerrarConeccion();
             }
         }
+
+        public Articulo seleccionar(int id)
+        {
+            try
+            {
+                Articulo seleccionado = new Articulo();
+                seleccionado = listarArticulos().Find(x => x.Id == id);
+                return seleccionado;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

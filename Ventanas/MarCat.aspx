@@ -11,7 +11,8 @@
             </div>
             <div class="mb-3">
                 <asp:GridView runat="server" AutoGenerateColumns="false" ID="dgvCategorias" DataKeyNames="Id"
-                    CssClass="table" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged">
+                    CssClass="table" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged" OnPageIndexChanging="dgvCategorias_PageIndexChanging"
+                    AllowPaging="true" PageSize="5">
                     <Columns>
                         <asp:BoundField HeaderText="Categoría" DataField="Descripcion" HeaderStyle-CssClass="table-dark" />
                         <asp:CommandField ShowSelectButton="true" SelectText="📝" HeaderText="Editar" HeaderStyle-CssClass="table-dark"/>
@@ -26,7 +27,8 @@
             </div>
             <div class="mb-3">
                 <asp:GridView runat="server" AutoGenerateColumns="false" ID="dgvMarcas" DataKeyNames="Id"
-                    CssClass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">
+                    CssClass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged" OnPageIndexChanging="dgvMarcas_PageIndexChanging"
+                    AllowPaging="true" PageSize="5">
                     <Columns>
                         <asp:BoundField HeaderText="Marca" DataField="Descripcion" HeaderStyle-CssClass="table-dark" />
                         <asp:CommandField ShowSelectButton="true" SelectText="📝" HeaderText="Editar" HeaderStyle-CssClass="table-dark"/>

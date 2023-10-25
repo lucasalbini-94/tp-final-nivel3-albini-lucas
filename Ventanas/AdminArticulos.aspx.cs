@@ -22,5 +22,11 @@ namespace Ventanas
             int id = int.Parse(dgvArticulos.SelectedDataKey.Value.ToString());
             Response.Redirect("Articulo.aspx?id=" + id);
         }
+
+        protected void dgvArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvArticulos.PageIndex = e.NewPageIndex;
+            dgvArticulos.DataBind();
+        }
     }
 }

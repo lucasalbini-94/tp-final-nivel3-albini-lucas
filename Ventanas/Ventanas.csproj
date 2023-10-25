@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminMarCat.aspx" />
+    <Content Include="AdminUsuarios.aspx" />
     <Content Include="MarCat.aspx" />
     <Content Include="Articulo.aspx" />
     <Content Include="Default.aspx" />
@@ -86,6 +87,13 @@
     </Compile>
     <Compile Include="AdminMarCat.aspx.designer.cs">
       <DependentUpon>AdminMarCat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUsuarios.aspx.cs">
+      <DependentUpon>AdminUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminUsuarios.aspx.designer.cs">
+      <DependentUpon>AdminUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="MarCat.aspx.cs">
       <DependentUpon>MarCat.aspx</DependentUpon>

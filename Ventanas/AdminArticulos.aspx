@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="AdminArticulos.aspx.cs" Inherits="Ventanas.ListaArticulos" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -11,7 +10,7 @@
             </div>
         </div>
         <div class="col-3">
-            <div class="d-flex" role="search">
+            <div class="mb-3">
                 <input class="form-control me-2" type="search" placeholder="Buscar por código" aria-label="Search" runat="server" />
             </div>
         </div>
@@ -27,7 +26,8 @@
         <div class="col-10">
             <div class="mb-3">
                 <asp:GridView runat="server" ID="dgvArticulos" DataKeyNames="Id" CssClass="table table-bordered" AutoGenerateColumns="false"
-                    OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged">
+                    OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged" OnPageIndexChanging="dgvArticulos_PageIndexChanging"
+                    AllowPaging="true" PageSize="5">
                     <Columns>
                         <asp:BoundField HeaderText="Código" DataField="Codigo" HeaderStyle-CssClass="table-dark"/>
                         <asp:BoundField HeaderText="Artículo" DataField="Nombre" HeaderStyle-CssClass="table-dark"/>
@@ -36,8 +36,10 @@
                     </Columns>
                 </asp:GridView>
             </div>
-            <a href="Articulo.aspx" class="btn btn-primary">Agregar</a>
-            <a href="MarCat.aspx" class="btn btn-warning">Administrar marcas y categorías</a>
+            <div class="mb-3">
+                <a href="Articulo.aspx" class="btn btn-primary">Agregar</a>
+                <a href="MarCat.aspx" class="btn btn-warning">Administrar marcas y categorías</a>
+            </div>
         </div>
         <div class="col-1"></div>
     </div>
