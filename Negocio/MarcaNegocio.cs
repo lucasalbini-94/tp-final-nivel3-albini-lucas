@@ -66,9 +66,28 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("Update MaRCAS Set Descripcion = @Descripcion Where Id = @Id");
+                datos.setearConsulta("Update MARCAS Set Descripcion = @Descripcion Where Id = @Id");
                 datos.setearParametro("@Descripcion", seleccionada.Descripcion);
                 datos.setearParametro("@Id", seleccionada.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConeccion();
+            }
+        }
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Delete From MARCAS Where Id = @id");
+                datos.setearParametro("@id", id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

@@ -69,15 +69,17 @@
   <ItemGroup>
     <Content Include="AdminMarCat.aspx" />
     <Content Include="AdminUsuarios.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="MarCat.aspx" />
     <Content Include="Articulo.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DescripcionArticulo.aspx" />
-    <Content Include="Error.aspx" />
     <Content Include="Favoritos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="AdminArticulos.aspx" />
     <Content Include="Perfil.aspx" />
+    <Content Include="Registro.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +96,20 @@
     </Compile>
     <Compile Include="AdminUsuarios.aspx.designer.cs">
       <DependentUpon>AdminUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="MarCat.aspx.cs">
       <DependentUpon>MarCat.aspx</DependentUpon>
@@ -122,13 +138,6 @@
     </Compile>
     <Compile Include="DescripcionArticulo.aspx.designer.cs">
       <DependentUpon>DescripcionArticulo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Error.aspx.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Error.aspx.designer.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Favoritos.aspx.cs">
       <DependentUpon>Favoritos.aspx</DependentUpon>
@@ -162,6 +171,13 @@
       <DependentUpon>Perfil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Master.Master" />

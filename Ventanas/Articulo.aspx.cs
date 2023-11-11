@@ -16,47 +16,55 @@ namespace Ventanas
         {
             try
             {
-                ArticuloNegocio articuloNegocio = new ArticuloNegocio();
-                if (!IsPostBack)
+                if (Helper.esAdmin(Session["user"]))
                 {
-                    MarcaNegocio marcaNegocio = new MarcaNegocio();
-                    CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-                    ddlMarca.DataSource = marcaNegocio.listarMarcas();
-                    ddlMarca.DataTextField = "Descripcion";
-                    ddlMarca.DataValueField = "Id";
-                    ddlMarca.DataBind();
-                    ddlCategoria.DataSource = categoriaNegocio.listarCategorias();
-                    ddlCategoria.DataTextField = "Descripcion";
-                    ddlCategoria.DataValueField = "Id";
-                    ddlCategoria.DataBind();
-                }
-                if (Request.QueryString["id"] != null && !IsPostBack)
-                {
-                    btnAgregar.Enabled = false;
-                    int id = int.Parse(Request.QueryString["id"].ToString());
-                    List<Articulo> lista = articuloNegocio.listarArticulos();
-                    Articulo seleccionado = lista.Find(x => x.Id == id);
+                    ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                    if (!IsPostBack)
+                    {
+                        MarcaNegocio marcaNegocio = new MarcaNegocio();
+                        CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                        ddlMarca.DataSource = marcaNegocio.listarMarcas();
+                        ddlMarca.DataTextField = "Descripcion";
+                        ddlMarca.DataValueField = "Id";
+                        ddlMarca.DataBind();
+                        ddlCategoria.DataSource = categoriaNegocio.listarCategorias();
+                        ddlCategoria.DataTextField = "Descripcion";
+                        ddlCategoria.DataValueField = "Id";
+                        ddlCategoria.DataBind();
+                    }
+                    if (Request.QueryString["id"] != null && !IsPostBack)
+                    {
+                        btnAgregar.Enabled = false;
+                        int id = int.Parse(Request.QueryString["id"].ToString());
+                        List<Articulo> lista = articuloNegocio.listarArticulos();
+                        Articulo seleccionado = lista.Find(x => x.Id == id);
 
-                    tbxCodigo.Text = seleccionado.Codigo;
-                    tbxNombre.Text = seleccionado.Nombre;
-                    tbxDescripcion.Text = seleccionado.Descripcion;
-                    ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
-                    ddlCategoria.SelectedValue = seleccionado.Categoria.Id.ToString();
-                    tbxPrecio.Text = seleccionado.Precio.ToString("0.00");
-                    if (seleccionado.ImagenUrl.ToLower().Contains("http"))
-                        tbxImagenUrl.Text = seleccionado.ImagenUrl;
-                    imgArticulo.ImageUrl = Helper.validarImagen(seleccionado.ImagenUrl);
+                        tbxCodigo.Text = seleccionado.Codigo;
+                        tbxNombre.Text = seleccionado.Nombre;
+                        tbxDescripcion.Text = seleccionado.Descripcion;
+                        ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
+                        ddlCategoria.SelectedValue = seleccionado.Categoria.Id.ToString();
+                        tbxPrecio.Text = seleccionado.Precio.ToString("0.00");
+                        if (seleccionado.ImagenUrl.ToLower().Contains("http"))
+                            tbxImagenUrl.Text = seleccionado.ImagenUrl;
+                        imgArticulo.ImageUrl = Helper.validarImagen(seleccionado.ImagenUrl);
+                    }
+                    else
+                    {
+                        btnModificar.Enabled = false;
+                        lbtEliminar.Enabled = false;
+                    }
+
                 }
                 else
                 {
-                    btnModificar.Enabled = false;
-                    lbtEliminar.Enabled = false;
+                    Session.Add("error", "No tiene permiso para acceder a esta página");
+                    Response.Redirect("Error.aspx?code=02", false);
                 }
-
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
         }
@@ -73,7 +81,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
 
@@ -92,7 +100,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
         }
@@ -132,7 +140,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
         }

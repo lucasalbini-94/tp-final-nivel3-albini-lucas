@@ -24,8 +24,16 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="Default.aspx">Tienda online</a>
                 <div class="ms-auto mx-2">
-                    <asp:Button Text="Iniciar sesión" ID="btnIniciarSesion" CssClass="btn btn-success" runat="server" />
-                    <asp:Button Text="Registrarse" ID="btnRegistrarse" CssClass="btn btn-outline-primary" runat="server" />
+                    <% if (UserActivo is null)
+                        { %>
+                    <a href="Login.aspx" class="btn btn-primary">Iniciar sesión</a>
+                    <a href="Registro.aspx" class="btn btn-outline-success">Registrarse</a>
+                    <% }
+                       else
+                       { %>
+                    <asp:Button Text="Cerrar Sesión" CssClass="btn btn-outline-primary" runat="server" ID="btnCerrarSesion"
+                        OnClick="btnCerrarSesion_Click"/>"
+                    <% } %>
                     <asp:Image ID="imgAvatar" CssClass="avatar" runat="server" />
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -42,11 +50,13 @@
                                 <a class="nav-link active" aria-current="page" href="Default.aspx">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Favoritos</a>
+                                <a class="nav-link" href="Favoritos.aspx">Favoritos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Perfil</a>
+                                <a class="nav-link" href="Perfil.aspx">Perfil</a>
                             </li>
+                            <% if (UserActivo != null && UserActivo.Admin)
+                                { %>
                             <li>
                                 <hr />
                             </li>
@@ -62,6 +72,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="AdminUsuarios.aspx">Lista de usuarios</a>
                             </li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Dominio;
 
 namespace Servicios
 {
@@ -35,6 +36,20 @@ namespace Servicios
             {
                 return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
             }
+        }
+
+        public static string mensajeError(Exception ex)
+        {
+            return ex.Message;
+        }
+
+        public static bool esAdmin(object user)
+        {
+            Usuario aux = (Usuario)user;
+            if (aux.Admin)
+                return true;
+            else
+                return false;
         }
     }
 }

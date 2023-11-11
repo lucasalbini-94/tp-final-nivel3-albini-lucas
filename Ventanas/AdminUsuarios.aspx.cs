@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
+using Servicios;
 
 namespace Ventanas
 {
@@ -23,28 +24,36 @@ namespace Ventanas
         {
             try
             {
-                UsuarioNegocio negocio = new UsuarioNegocio();
-                ListaUsuarios = negocio.listarUsuarios();
-                CantUsuarios = ListaUsuarios.Count();
-                dgvUsuarios.DataSource = ListaUsuarios;
-                dgvUsuarios.DataBind();
-                if (SeccionUsuario)
+                if (Helper.esAdmin(Session["user"]))
                 {
-                    Usuario aux = (Usuario)Session["usuario"];
-                    tbxEmail.Text = aux.Email;
-                    if (aux.Admin)
+                    UsuarioNegocio negocio = new UsuarioNegocio();
+                    ListaUsuarios = negocio.listarUsuarios();
+                    CantUsuarios = ListaUsuarios.Count();
+                    dgvUsuarios.DataSource = ListaUsuarios;
+                    dgvUsuarios.DataBind();
+                    if (SeccionUsuario)
                     {
-                        lbtAdmin.Text = "Quitar admin";
+                        Usuario aux = (Usuario)Session["usuario"];
+                        tbxEmail.Text = aux.Email;
+                        if (aux.Admin)
+                        {
+                            lbtAdmin.Text = "Quitar admin";
+                        }
+                        else
+                        {
+                            lbtAdmin.Text = "Hacer admin";
+                        }
                     }
-                    else
-                    {
-                        lbtAdmin.Text = "Hacer admin";
-                    }
+                }
+                else
+                {
+                    Session.Add("error", "No tiene permiso para acceder a esta página");
+                    Response.Redirect("Error.aspx?code=02", false);
                 }
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx", false);
             }
         }
@@ -75,7 +84,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx", false);
             }
 
@@ -93,7 +102,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx", false);
             }
         }

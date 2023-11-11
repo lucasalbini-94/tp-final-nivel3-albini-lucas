@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
 using Dominio;
+using Servicios;
 
 namespace Ventanas
 {
@@ -13,13 +14,21 @@ namespace Ventanas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            MarcaNegocio mNegocio = new MarcaNegocio();
-            CategoriaNegocio cNegocio = new CategoriaNegocio();
+            if (Helper.esAdmin(Session["user"]))
+            {
+                MarcaNegocio mNegocio = new MarcaNegocio();
+                CategoriaNegocio cNegocio = new CategoriaNegocio();
 
-            dgvMarcas.DataSource = mNegocio.listarMarcas();
-            dgvMarcas.DataBind();
-            dgvCategorias.DataSource = cNegocio.listarCategorias();
-            dgvCategorias.DataBind();
+                dgvMarcas.DataSource = mNegocio.listarMarcas();
+                dgvMarcas.DataBind();
+                dgvCategorias.DataSource = cNegocio.listarCategorias();
+                dgvCategorias.DataBind();
+            }
+            else
+            {
+                Session.Add("error", "No tiene permiso para acceder a esta página");
+                Response.Redirect("Error.aspx?code=02", false);
+            }
         }
 
         protected void btnNuevaCategoria_Click(object sender, EventArgs e)
@@ -38,7 +47,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
         }
@@ -47,7 +56,7 @@ namespace Ventanas
         {
             try
             {
-                if(tbxNuevaMarca.Text != "")
+                if (tbxNuevaMarca.Text != "")
                 {
                     MarcaNegocio mNegocio = new MarcaNegocio();
                     Marca nueva = new Marca();
@@ -61,7 +70,7 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
+                Session.Add("error", Helper.mensajeError(ex));
                 Response.Redirect("Error.aspx");
             }
         }

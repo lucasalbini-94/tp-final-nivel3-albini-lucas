@@ -11,7 +11,28 @@ namespace Ventanas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblErrorText.Text = Session["error"].ToString();
+            lblError.Text = Session["error"].ToString();
+            if (Request.QueryString["code"] != null)
+            {
+                int code = int.Parse(Request.QueryString["code"].ToString());
+                if (code == 01)
+                {
+                    hlkRedirect.Visible = true;
+                    hlkRedirect.Text = "Iniciar sesión";
+                    hlkRedirect.NavigateUrl = "Login.aspx";
+
+                }
+                else if (code == 02)
+                {
+                    hlkRedirect.Visible = true;
+                    hlkRedirect.Text = "Volver al inicio";
+                    hlkRedirect.NavigateUrl = "Default.aspx";
+                }
+                else
+                {
+                    hlkRedirect.Visible = false;
+                }
+            }
         }
     }
 }
