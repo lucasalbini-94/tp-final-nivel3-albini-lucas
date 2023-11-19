@@ -18,6 +18,8 @@ namespace Ventanas
             try
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
+
+                // Guardar el id de artículo que se recibe por URL y asignar a la propiedad seleccionado
                 int id = int.Parse(Request.QueryString["id"].ToString());
                 seleccionado = negocio.seleccionar(id);
 
@@ -25,18 +27,18 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
 
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-
+            // Lógica en proceso de planificación
         }
 
         protected void btnCarrito_Click(object sender, EventArgs e)
         {
-
+            // Lógica en proceso de planificación
         }
     }
 }

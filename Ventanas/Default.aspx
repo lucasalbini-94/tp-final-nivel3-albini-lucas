@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" EnableEventValidation="true"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" EnableEventValidation="true" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -14,17 +14,19 @@
         <div class="col-1"></div>
         <div class="col-6">
             <div class="d-flex mt-3" role="search">
-                <asp:TextBox runat="server" CssClass="form-control me-2" ID="tbxBuscar"/>
+                <asp:TextBox runat="server" CssClass="form-control me-2" ID="tbxBuscar" />
                 <asp:Button Text="Buscar" CssClass="btn btn-outline-success" ID="btnBuscar" OnClick="btnBuscar_Click" runat="server" />
             </div>
         </div>
         <div class="col-1"></div>
         <div class="col-4">
             <div class="form-check mt-4">
-                <asp:CheckBox Text="Filtro avanzado" CssClass="form-check" AutoPostBack="true" runat="server" ID="cbxFiltroAvanzado" OnCheckedChanged="filtroAvanzado_SelectedIndexChange"/>
+                <asp:CheckBox Text="Filtro avanzado" CssClass="form-check" AutoPostBack="true" runat="server" ID="cbxFiltroAvanzado" OnCheckedChanged="filtroAvanzado_SelectedIndexChange" />
             </div>
         </div>
     </div>
+
+    <%--    Verificar si el filtro avanzado está activado--%>
     <% if (cbxFiltroAvanzado.Checked)
         { %>
     <div class="row mt-4">
@@ -46,64 +48,27 @@
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10 row row-cols-1 row-cols-md-3 g-4">
-            <% if (ListaFiltrada is null)
-                {
-                    foreach (Dominio.Articulo articulo in ListaArticulos)
-                    { %>
-            <div class="col">
-                <div class="card mb-3">
-
-                 <% if (articulo.ImagenUrl.ToLower().Contains("http"))
-                     { %>
-                        <%--Cargo imagen desde la web--%>
-                        <img src="<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde la web">
-                 <% }
-                     else
-                     { %>
-                        <%--Cargo imagen desde la carpeta local--%>
-                        <img src="/Images/ImagesArt/<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde carpeta">
-                 <% } %>
-                    <div class="card-body">
-                        <h5 class="card-title"><%: articulo.Nombre %></h5>
-                        <h4 class="card-subtitle"><%: articulo.Precio.ToString("0.00") %></h4>
-                        <div class="mt-3">
-                            <a href="DescripcionArticulo.aspx?id=<%: articulo.Id %>" class="btn btn-secondary">Ver</a>
+            <asp:Repeater ID="repRepetidor" runat="server">
+                <ItemTemplate>
+                    <div class="col">
+                        <div class="card mb-3">
+                            <img src='<%# cargarImagen(Eval("ImagenUrl").ToString()) %>' alt="Imágen de artículo" class="card-img-top"/>
+                            <div class="card-body">
+                                <h5 class="card-title"><%#Eval("Nombre") %></h5>
+                                <h4 class="card-subtitle"><%#Eval("Precio") %></h4>
+                                <div class="mt-3">
+                                    <a href="DescripcionArticulo.aspx?id=<%#Eval("Id") %>" class="btn btn-outline-primary">Ver</a>
+                                    <% if (Session["user"] != null)
+                                       { %>
+                                    <asp:Button Text="Favoritos" runat="server" CssClass="btn btn-outline-primary" ID="btnFavoritos"
+                                        CommandArgument='<%#Eval("Id") %>' CommandName="IdArticulo" OnClick="btnFavoritos_Click"/>
+                                    <% } %>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                        
-                </div>
-            </div>
-                 <% }
-                }
-                else
-                {
-                    foreach (Dominio.Articulo articulo in ListaFiltrada)
-                    { %>
-            <div class="col">
-                <div class="card mb-3">
-
-                 <% if (articulo.ImagenUrl.ToLower().Contains("http"))
-                     { %>
-                        <%--Cargo imagen desde la web--%>
-                        <img src="<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde la web">
-                 <% }
-                     else
-                     { %>
-                        <%--Cargo imagen desde la carpeta local--%>
-                        <img src="/Images/ImagesArt/<%: articulo.ImagenUrl %>" class="card-img-top" alt="Imagen desde carpeta">
-                 <% } %>
-                    <div class="card-body">
-                        <h5 class="card-title"><%: articulo.Nombre %></h5>
-                        <h4 class="card-subtitle"><%: articulo.Precio.ToString("0.00") %></h4>
-                        <div class="mt-3">
-                            <a href="DescripcionArticulo.aspx?id=<%: articulo.Id %>" class="btn btn-secondary">Ver</a>
-                        </div>
-                    </div>
-                        
-                </div>
-            </div>
-                 <% }
-                } %>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
         <div class="col-1"></div>
     </div>

@@ -18,7 +18,7 @@ namespace Ventanas
         {
             Exception ex = Server.GetLastError();
             Session.Add("error", Helper.mensajeError(ex));
-            Server.Transfer("Error.aspx");
+            Server.Transfer("Error.aspx?code=00");
         }
     }
 }

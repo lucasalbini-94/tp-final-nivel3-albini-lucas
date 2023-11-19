@@ -24,17 +24,27 @@ namespace Ventanas
         {
             try
             {
+                // Verificar que el usuario es admin
                 if (Helper.esAdmin(Session["user"]))
                 {
+                    // Cargar tabla de usuarios
                     UsuarioNegocio negocio = new UsuarioNegocio();
                     ListaUsuarios = negocio.listarUsuarios();
+
+                    // Guardar cantidad de usuarios en atributo
                     CantUsuarios = ListaUsuarios.Count();
+
                     dgvUsuarios.DataSource = ListaUsuarios;
                     dgvUsuarios.DataBind();
+                    
+                    // Verifica si se ha seleccionado un usuario para cargar la sección
                     if (SeccionUsuario)
                     {
-                        Usuario aux = (Usuario)Session["usuario"];
+                        // Obtener el usuario seleccionado de la sesión
+                        Usuario aux = (Usuario)Session["selectedUser"];
+                        // Cargar mail
                         tbxEmail.Text = aux.Email;
+                        // Definir acción sobre el usuario
                         if (aux.Admin)
                         {
                             lbtAdmin.Text = "Quitar admin";
@@ -54,20 +64,25 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
 
         protected void dgvUsuarios_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Guardar el id de usuario en atributo
             IdUsuario = int.Parse(dgvUsuarios.SelectedDataKey.Value.ToString());
-            Session.Add("usuario", ListaUsuarios.Find(x => x.Id == IdUsuario));
+            // Guardar usuario seleccionado en sesión
+            Session.Add("selectedUser", ListaUsuarios.Find(x => x.Id == IdUsuario));
+            // Cambiar valor de atributo para mostrar sección en pantalla
             SeccionUsuario = true;
+            // Recargar página
             Page_Load(sender, e);
         }
 
         protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            // Controlar páginas de la grilla
             dgvUsuarios.PageIndex = e.NewPageIndex;
             dgvUsuarios.DataBind();
         }
@@ -77,15 +92,17 @@ namespace Ventanas
             try
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();
-                Usuario aux = (Usuario)Session["usuario"];
+                // Eliminar usuario según id 
                 negocio.eliminarUsuario(IdUsuario);
+                // Cambiar atributo para ocultar sección de edición
                 SeccionUsuario = false;
+                // Recargar página
                 Page_Load(sender, e);
             }
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
 
         }
@@ -95,7 +112,9 @@ namespace Ventanas
             try
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();
-                Usuario aux = (Usuario)Session["usuario"];
+                Usuario aux = (Usuario)Session["selectedUser"];
+
+                // Cambiar permisos de usuario
                 negocio.cambiarNivel(aux.Admin, aux.Id);
                 SeccionUsuario = false;
                 Page_Load(sender, e);
@@ -103,7 +122,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
     }

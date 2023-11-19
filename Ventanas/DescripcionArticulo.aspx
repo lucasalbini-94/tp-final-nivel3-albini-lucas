@@ -36,13 +36,13 @@
         <div class="col-3">
             <div class="mb-3">
                 <h5 class="mt-3">Precio</h5>
-                <h3>$<%: seleccionado.Precio.ToString("0.00") %></h3>
+                <h3 class="text-success">$<%: seleccionado.Precio.ToString("0.00") %></h3>
             </div>
             <div class="mb-3">
-                <asp:Button Text="Comprar" ID="btnComprar" CssClass="btn btn-success form-control" OnClick="btnComprar_Click" runat="server" />
+                <asp:Button Text="Comprar" ID="btnComprar" CssClass="btn btn-outline-success form-control" OnClick="btnComprar_Click" runat="server" />
             </div>
             <div class="mb-3">
-                <asp:Button Text="Carrito" ID="btnCarrito" CssClass="btn btn-secondary form-control" OnClick="btnCarrito_Click" runat="server" />
+                <asp:Button Text="Carrito" ID="btnCarrito" CssClass="btn btn-outline-primary form-control" OnClick="btnCarrito_Click" runat="server" />
             </div>
         </div>
     </div>

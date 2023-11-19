@@ -33,12 +33,21 @@ namespace Ventanas
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// Control hlkRedirect.
+        /// Control hlkRedirect1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlkRedirect;
+        protected global::System.Web.UI.WebControls.HyperLink hlkRedirect1;
+
+        /// <summary>
+        /// Control hlkRedirect2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hlkRedirect2;
     }
 }

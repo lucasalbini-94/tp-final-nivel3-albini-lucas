@@ -20,8 +20,10 @@ namespace Ventanas
         {
             try
             {
+                // Verificar que el usuario es admin
                 if (Helper.esAdmin(Session["user"]))
                 {
+                    //Verivicar si se debe mostrar la lista completa o la lista filtrada
                     if (ListaFiltrada is null)
                     {
                         ArticuloNegocio negocio = new ArticuloNegocio();
@@ -44,18 +46,20 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Seleccionar un articulo de la lista por id
             int id = int.Parse(dgvArticulos.SelectedDataKey.Value.ToString());
             Response.Redirect("Articulo.aspx?id=" + id);
         }
 
         protected void dgvArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            // Controlar páginas de la GridView
             dgvArticulos.PageIndex = e.NewPageIndex;
             dgvArticulos.DataBind();
         }
@@ -64,6 +68,7 @@ namespace Ventanas
         {
             try
             {
+                // Aplicar filtro según código
                 string filtro = tbxCodigo.Text;
                 ListaFiltrada = Lista.FindAll(x => x.Codigo.ToUpper().Contains(filtro.ToUpper()));
                 Page_Load(sender, e);
@@ -71,7 +76,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
 
@@ -79,6 +84,7 @@ namespace Ventanas
         {
             try
             {
+                // Aplicar filtro según nombre de articulo
                 string filtro = tbxArticulo.Text;
                 ListaFiltrada = Lista.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()));
                 Page_Load(sender, e);
@@ -86,7 +92,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
     }

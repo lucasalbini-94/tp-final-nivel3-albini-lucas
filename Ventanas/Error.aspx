@@ -30,7 +30,8 @@
                     <asp:Label CssClass="form-label" ID="lblError" runat="server" />
                 </div>
                 <div class="mb-3 text-center">
-                    <asp:HyperLink CssClass="form-label" ID="hlkRedirect" runat="server" />
+                    <p><asp:HyperLink CssClass="form-label" ID="hlkRedirect1" runat="server" />
+                        <asp:HyperLink CssClass="form-label" ID="hlkRedirect2" runat="server" /></p>
                 </div>
             </div>
             <div class="col-4"></div>

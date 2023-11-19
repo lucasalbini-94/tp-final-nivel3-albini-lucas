@@ -18,12 +18,17 @@ namespace Ventanas
         {
             try
             {
+                // Verificar si el usuario es admin
                 if (Helper.esAdmin(Session["user"]))
                 {
+                    // Otener por URL el Id y el tipo de objeto
                     id = int.Parse(Request.QueryString["id"].ToString());
                     tipo = Request.QueryString["tipo"];
+
+                    // Si no es una redirección, cargar los datos del objeto seleccionado
                     if (!IsPostBack)
                     {
+                        // Si es de tipo Marca
                         if (tipo == "marca")
                         {
                             MarcaNegocio negocio = new MarcaNegocio();
@@ -32,6 +37,7 @@ namespace Ventanas
 
                             tbxDescripcion.Text = seleccionada.Descripcion;
                         }
+                        //Si es de tipo Categoria
                         else if (tipo == "categoria")
                         {
                             CategoriaNegocio negocio = new CategoriaNegocio();
@@ -51,7 +57,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("Error.aspx?code=00", false);
             }
         }
 
@@ -59,6 +65,7 @@ namespace Ventanas
         {
             try
             {
+                // Eliminar de la lista según el tipo de objeto
                 if(tipo == "categoria")
                 {
                     CategoriaNegocio negocio = new CategoriaNegocio();
@@ -75,7 +82,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx?code=00");
             }
         }
 
@@ -83,6 +90,7 @@ namespace Ventanas
         {
             try
             {
+                // Modificar según el tipo de objeto
                 if (tipo == "categoria")
                 {
                     CategoriaNegocio negocio = new CategoriaNegocio();
@@ -107,7 +115,7 @@ namespace Ventanas
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx?code=00");
             }
         }
     }

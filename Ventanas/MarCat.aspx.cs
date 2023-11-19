@@ -14,11 +14,12 @@ namespace Ventanas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Verificar que el usuario es admin
             if (Helper.esAdmin(Session["user"]))
             {
                 MarcaNegocio mNegocio = new MarcaNegocio();
                 CategoriaNegocio cNegocio = new CategoriaNegocio();
-
+                // Cargar las grillas
                 dgvMarcas.DataSource = mNegocio.listarMarcas();
                 dgvMarcas.DataBind();
                 dgvCategorias.DataSource = cNegocio.listarCategorias();
@@ -35,20 +36,24 @@ namespace Ventanas
         {
             try
             {
+                // Verificar que el campo esté cargado
                 if (tbxNuevaCategoria.Text != "")
                 {
                     CategoriaNegocio cNegocio = new CategoriaNegocio();
                     Categoria nueva = new Categoria();
-
+                    // Lógica para cargar nueva categiróa
                     nueva.Descripcion = tbxNuevaCategoria.Text;
                     cNegocio.agregar(nueva);
+                    tbxNuevaCategoria.Text = null;
+                    tbxNuevaMarca.Text = null;
+                    // Recargar página
                     Page_Load(sender, e);
                 }
             }
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx?code=00");
             }
         }
 
@@ -56,22 +61,24 @@ namespace Ventanas
         {
             try
             {
+                // Verificar que el campo está cargado
                 if (tbxNuevaMarca.Text != "")
                 {
                     MarcaNegocio mNegocio = new MarcaNegocio();
                     Marca nueva = new Marca();
-
+                    // Lógica para cargar marca
                     nueva.Descripcion = tbxNuevaMarca.Text;
                     mNegocio.agregar(nueva);
-                    Page_Load(sender, e);
                     tbxNuevaCategoria.Text = null;
                     tbxNuevaMarca.Text = null;
+                    // Recargar página
+                    Page_Load(sender, e);
                 }
             }
             catch (Exception ex)
             {
                 Session.Add("error", Helper.mensajeError(ex));
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx?code=00");
             }
         }
 

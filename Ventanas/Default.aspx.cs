@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
+using Servicios;
 
 namespace Ventanas
 {
@@ -13,14 +14,16 @@ namespace Ventanas
     {
         public List<Articulo> ListaArticulos { get; set; }
 
-        public List<Articulo> ListaFiltrada { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                // Cargar datos de artículos en la colección ListaArticulos
                 ArticuloNegocio articulo = new ArticuloNegocio();
-                ListaArticulos = articulo.listarArticulos();
+                if (ListaArticulos is null)
+                    ListaArticulos = articulo.listarArticulos();
+
+                // Verificar si el filtro avanzado está seleccionado
                 if (cbxFiltroAvanzado.Checked)
                 {
                     tbxBuscar.Enabled = false;
@@ -31,8 +34,11 @@ namespace Ventanas
                     tbxBuscar.Enabled = true;
                     btnBuscar.Enabled = true;
                 }
+
+                // Verificar si se está recargando la página
                 if (!IsPostBack)
                 {
+                    // Cargar los desplegables
                     MarcaNegocio marca = new MarcaNegocio();
                     CategoriaNegocio categoria = new CategoriaNegocio();
 
@@ -45,11 +51,14 @@ namespace Ventanas
                     ddlCategoria.DataTextField = "Descripcion";
                     ddlCategoria.DataBind();
                 }
+                // Cargar repetidor
+                repRepetidor.DataSource = ListaArticulos;
+                repRepetidor.DataBind();
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
+                Session.Add("error", Helper.mensajeError(ex));
+                Response.Redirect("Error.aspx?code=00");
             }
         }
 
@@ -57,14 +66,20 @@ namespace Ventanas
         {
             try
             {
+                // Guardar el texto del buscador
+                ArticuloNegocio negocio = new ArticuloNegocio();
                 string filtro = tbxBuscar.Text;
-                ListaFiltrada = ListaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()));
+                // Aplicar la búsqueda en ListaArticulos y guardar el resultado
+                ListaArticulos = negocio.listarArticulos().FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()));
+                // Vaciar repetidor
+                repRepetidor.DataSource = null;
+                //Recargar página
                 Page_Load(sender, e);
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
+                Session.Add("error", Helper.mensajeError(ex));
+                Response.Redirect("Error.aspx?code=00");
             }
         }
 
@@ -74,7 +89,7 @@ namespace Ventanas
             {
                 if (cbxFiltroAvanzado.Checked)
                 {
-                    ListaFiltrada = ListaArticulos.FindAll(x => x.Marca.Descripcion == ddlMarca.SelectedItem.Text).FindAll(x =>
+                    ListaArticulos = ListaArticulos.FindAll(x => x.Marca.Descripcion == ddlMarca.SelectedItem.Text).FindAll(x =>
                             x.Categoria.Descripcion == ddlCategoria.SelectedItem.Text);
                     Page_Load(sender, e);
                 }
@@ -85,8 +100,35 @@ namespace Ventanas
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
+                Session.Add("error", Helper.mensajeError(ex));
+                Response.Redirect("Error.aspx?code=00", false);
+            }
+        }
+        public string cargarImagen(string direccion)
+        {
+            if (direccion.ToLower().Contains("http"))
+            {
+                return direccion;
+            }
+            else
+            {
+                return "/Image/ImageArt/" + direccion;
+            }
+        }
+
+        protected void btnFavoritos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idArticulo = int.Parse(((Button)sender).CommandArgument);
+                FavoritosNegocio negocio = new FavoritosNegocio();
+                int idUser = ((Usuario)Session["user"]).Id;
+                negocio.agregarFavorito(idUser, idArticulo);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", Helper.mensajeError(ex));
+                Response.Redirect("Error.aspx?cpde=00", false);
             }
         }
     }
