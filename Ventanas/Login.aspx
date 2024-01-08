@@ -15,19 +15,26 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="mb-5 mt-5">
-                <h2 class="text-center">Iniciar sesión</h2>
+                    <h2 class="text-center">Iniciar sesión</h2>
                 </div>
                 <div class="mb-3">
                     <label for="tbxEmail" class="form-label">Email</label>
                     <asp:TextBox runat="server" ID="tbxEmail" CssClass="form-control" TextMode="Email" />
+                    <asp:RequiredFieldValidator ErrorMessage="Debe ingresar el correo electrónico" ControlToValidate="tbxEmail"
+                        runat="server" CssClass="text-danger" />
+                    <asp:RegularExpressionValidator ErrorMessage="Formato de correo electrónico incorrecto"
+                        ControlToValidate="tbxEmail" runat="server" CssClass="text-danger"
+                        ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" />
                 </div>
                 <div class="mb-3">
                     <label for="tbxPass" class="form-label">Contraseña</label>
                     <asp:TextBox runat="server" ID="tbxPass" CssClass="form-control" TextMode="Password" />
+                    <asp:RequiredFieldValidator ErrorMessage="Ingrese una contraseña" ControlToValidate="tbxPass" runat="server"
+                        CssClass="text-danger" />
                 </div>
                 <div class="mb-3">
                     <asp:Button Text="Ingresar" runat="server" ID="btnIngresar" CssClass="mt-4 btn btn-outline-primary form-control"
-                        OnClick="btnIngresar_Click"/>
+                        OnClick="btnIngresar_Click" />
                 </div>
                 <div class="mb-3 text-center">
                     <label id="lblRecPass" class="form-label">¿Olvidaste tu contraseña? ¡Recupérala <a href="#" class="form-label">aquí!</a></label>

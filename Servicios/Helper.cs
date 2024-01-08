@@ -26,8 +26,10 @@ namespace Servicios
                 }
                 else if (!string.IsNullOrEmpty(direccion))
                 {
-                    
-                    return "~/Images/ImagesArt/" + direccion;
+                    if (direccion.ToLower().Contains("perfil"))
+                        return "~/Images/ImagePerfil/" + direccion;
+                    else
+                        return "~/ImagesArt" + direccion;
                 }
                 else
                     return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
@@ -36,6 +38,11 @@ namespace Servicios
             {
                 return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
             }
+        }
+
+        public static string placeHolder()
+        {
+            return "https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg";
         }
 
         public static string mensajeError(Exception ex)

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" EnableEventValidation="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Ventanas.Default" EnableEventValidation="false" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -55,7 +55,7 @@
                             <img src='<%# cargarImagen(Eval("ImagenUrl").ToString()) %>' alt="Imágen de artículo" class="card-img-top"/>
                             <div class="card-body">
                                 <h5 class="card-title"><%#Eval("Nombre") %></h5>
-                                <h4 class="card-subtitle"><%#Eval("Precio") %></h4>
+                                <h4 class="card-subtitle"><%#((decimal)Eval("Precio")).ToString("0.00") %></h4>
                                 <div class="mt-3">
                                     <a href="DescripcionArticulo.aspx?id=<%#Eval("Id") %>" class="btn btn-outline-primary">Ver</a>
                                     <% if (Session["user"] != null)

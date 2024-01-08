@@ -104,6 +104,7 @@ namespace Ventanas
                 Response.Redirect("Error.aspx?code=00", false);
             }
         }
+
         public string cargarImagen(string direccion)
         {
             if (direccion.ToLower().Contains("http"))

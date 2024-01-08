@@ -31,10 +31,10 @@
                     <a href="Login.aspx" class="btn btn-primary">Iniciar sesión</a>
                     <a href="Registro.aspx" class="btn btn-outline-success">Registrarse</a>
                     <% }
-                       else
-                       { %>
+                        else
+                        { %>
                     <asp:Button Text="Cerrar Sesión" CssClass="btn btn-outline-primary" runat="server" ID="btnCerrarSesion"
-                        OnClick="btnCerrarSesion_Click"/>"
+                        OnClick="btnCerrarSesion_Click" />"
                     <% } %>
                     <asp:Image ID="imgAvatar" CssClass="avatar" runat="server" />
                 </div>
@@ -88,10 +88,16 @@
         </div>
         <footer class="bg-dark">
             <div class="row">
+                <div class="col mt-2 mb-2 text-center">
+                    <h5 class="text-white mt-4 mb-2">Desarrollado por Lucas Albini</h5>
+                    <h6 class="text-white mb-3">Esta aplicación web no es legítima. Ha sido creada a modo de práctica</h6>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-1"></div>
                 <div class="col-4">
                     <div>
-                        <h5 class="text-white mt-4">Contacto</h5>
+                        <h5 class="text-white mb-4">Contacto</h5>
                         <ul>
                             <li><a href="https://www.linkedin.com/in/lucas-albini-541593251/">LinkedIn</a></li>
                             <li><a href="https://github.com/lucasalbini-94">GitHub</a></li>

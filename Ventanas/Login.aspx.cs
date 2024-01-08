@@ -19,6 +19,11 @@ namespace Ventanas
 
         protected void btnIngresar_Click(object sender, EventArgs e)
         {
+            // Revisar validaciónes
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
+
             try
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();

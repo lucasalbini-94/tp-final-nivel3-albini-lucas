@@ -25,7 +25,8 @@ namespace Ventanas
                     {
                         Response.Redirect("Login.aspx", false);
                     }
-                    imgAvatar.ImageUrl = "https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg";
+                    
+                    imgAvatar.ImageUrl = Helper.placeHolder();
                 }
                 else
                 {
@@ -35,11 +36,11 @@ namespace Ventanas
                     // Verificar si tiene imágen de perfil
                     if (UserActivo.UrlImagenPerfil != null)
                     {
-                        imgAvatar.ImageUrl = UserActivo.UrlImagenPerfil;
+                        imgAvatar.ImageUrl = Helper.validarImagen(UserActivo.UrlImagenPerfil);
                     }
                     else
                     {
-                        imgAvatar.ImageUrl = "https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg";
+                        imgAvatar.ImageUrl = Helper.placeHolder();
                     }
                 }
             }
