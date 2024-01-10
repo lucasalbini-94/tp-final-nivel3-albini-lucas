@@ -9,14 +9,20 @@
             <div class="mb-3">
                 <label for="tbxCodigo" class="form-label">Código</label>
                 <asp:TextBox runat="server" ID="tbxCodigo" CssClass="form-control" />
+                <asp:RequiredFieldValidator ErrorMessage="El código es requerido" ControlToValidate="tbxCodigo" runat="server"
+                    CssClass="text-danger"/>
             </div>
             <div class="mb-3">
                 <label for="tbxNombre" class="form-label">Nombre</label>
                 <asp:TextBox runat="server" ID="tbxNombre" CssClass="form-control" />
+                <asp:RequiredFieldValidator ErrorMessage="El nombre es requerido" ControlToValidate="tbxNombre" runat="server"
+                    CssClass="text-danger"/>
             </div>
             <div class="mb-3">
                 <label for="tbxDescripcion" class="form-label">Descripción</label>
                 <asp:TextBox runat="server" ID="tbxDescripcion" CssClass="form-control" />
+                <asp:RequiredFieldValidator ErrorMessage="La descripción es requerida" ControlToValidate="tbxDescripcion" runat="server" 
+                    CssClass="text-danger"/>
             </div>
             <div class="mb-3">
                 <label for="ddlMarca" class="form-label">Marca</label>
@@ -29,6 +35,10 @@
             <div class="mb-3">
                 <label for="tbxPrecio" class="form-label">Precio</label>
                 <asp:TextBox runat="server" ID="tbxPrecio" CssClass="form-control" />
+                <asp:RequiredFieldValidator ErrorMessage="El precio es requerido" ControlToValidate="tbxPrecio" runat="server"
+                    CssClass="text-danger"/>
+                <asp:RegularExpressionValidator ErrorMessage="Solo números con dos decimales" ControlToValidate="tbxPrecio" runat="server" 
+                    CssClass="text-danger" ValidationExpression="^\d+(\.\d{1,2})?$"/>
             </div>
         </div>
         <div class="col-md-3">

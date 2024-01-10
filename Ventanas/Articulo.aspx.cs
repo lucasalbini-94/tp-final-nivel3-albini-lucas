@@ -82,6 +82,10 @@ namespace Ventanas
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return;
+
                 // Lógica para agregar un articulo en la DB
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 Articulo nuevo = new Articulo();
@@ -100,6 +104,10 @@ namespace Ventanas
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
+
             try
             {
                 // Logica para modificación de artículo
