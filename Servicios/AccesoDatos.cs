@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Servicios
 {
     public class AccesoDatos
     {
-        private SqlConnection coneccion;
+        private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
         public SqlDataReader Lector
@@ -18,7 +19,7 @@ namespace Servicios
         }
         public AccesoDatos()
         {
-            coneccion = new SqlConnection("server=.\\SQLEXPRESS; database=CATALOGO_WEB_DB; integrated security=true");
+            conexion = new SqlConnection(ConfigurationManager.AppSettings["cadenaConexion"]);
             comando = new SqlCommand();
         }
         public void setearConsulta(string consulta)
@@ -32,10 +33,10 @@ namespace Servicios
         }
         public void ejecutarLectura()
         {
-            comando.Connection = coneccion;
+            comando.Connection = conexion;
             try
             {
-                coneccion.Open();
+                conexion.Open();
                 lector = comando.ExecuteReader();
             }
             catch (Exception ex)
@@ -45,10 +46,10 @@ namespace Servicios
         }
         public void ejecutarAccion()
         {
-            comando.Connection = coneccion;
+            comando.Connection = conexion;
             try
             {
-                coneccion.Open();
+                conexion.Open();
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -61,7 +62,7 @@ namespace Servicios
         {
             if (lector != null)
                 lector.Close();
-            coneccion.Close();
+            conexion.Close();
         }
 
     }
