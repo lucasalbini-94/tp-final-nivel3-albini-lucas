@@ -20,6 +20,7 @@ namespace Servicios
         public AccesoDatos()
         {
             conexion = new SqlConnection(ConfigurationManager.AppSettings["cadenaConexion"]);
+            //conexion = new SqlConnection("server =.\\SQLEXPRESS; database = CATALOGO_WEB_DB; integrated security = true");
             comando = new SqlCommand();
         }
         public void setearConsulta(string consulta)
@@ -41,6 +42,7 @@ namespace Servicios
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 throw ex;
             }
         }
