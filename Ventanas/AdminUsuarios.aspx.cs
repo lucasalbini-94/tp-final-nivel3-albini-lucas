@@ -12,7 +12,9 @@ namespace Ventanas
 {
     public partial class AdminUsuarios : System.Web.UI.Page
     {
-        public List<Usuario> ListaUsuarios;
+        private List<Usuario> ListaUsuarios;
+
+        private List<Usuario> ListaFiltrada;
 
         public int CantUsuarios;
 
@@ -27,16 +29,26 @@ namespace Ventanas
                 // Verificar que el usuario es admin
                 if (Helper.esAdmin(Session["user"]))
                 {
-                    // Cargar tabla de usuarios
-                    UsuarioNegocio negocio = new UsuarioNegocio();
-                    ListaUsuarios = negocio.listarUsuarios();
+                    // Cargar tabla de usuarios con lista completa o filtrada
+                    if (ListaFiltrada is null)
+                    {
+                        UsuarioNegocio negocio = new UsuarioNegocio();
+                        ListaUsuarios = negocio.listarUsuarios();
 
-                    // Guardar cantidad de usuarios en atributo
-                    CantUsuarios = ListaUsuarios.Count();
+                        // Guardar cantidad de usuarios en atributo
+                        CantUsuarios = ListaUsuarios.Count();
 
-                    dgvUsuarios.DataSource = ListaUsuarios;
-                    dgvUsuarios.DataBind();
-                    
+                        dgvUsuarios.DataSource = ListaUsuarios;
+                        dgvUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        CantUsuarios = ListaFiltrada.Count();
+
+                        dgvUsuarios.DataSource = ListaFiltrada;
+                        dgvUsuarios.DataBind();
+                    }
+
                     // Verifica si se ha seleccionado un usuario para cargar la sección
                     if (SeccionUsuario)
                     {
@@ -118,6 +130,23 @@ namespace Ventanas
                 negocio.cambiarNivel(aux.Admin, aux.Id);
                 SeccionUsuario = false;
                 Page_Load(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", Helper.mensajeError(ex));
+                Response.Redirect("Error.aspx?code=00", false);
+            }
+        }
+
+        protected void tbxFiltroEmail_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Aplicar filtro según email
+                string filtro = tbxFiltroEmail.Text;
+                ListaFiltrada = ListaUsuarios.FindAll(x => x.Email.ToLower().Contains(filtro.ToLower()));
+                Page_Load(sender, e);
+
             }
             catch (Exception ex)
             {
